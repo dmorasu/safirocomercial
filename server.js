@@ -125,10 +125,27 @@ app.post('/buscar', (req, res) => {
 //     });
 // });
 
-https.createServer(options, app).listen(5000, () => {
-  console.log('Servidor HTTPS corriendo en puerto 5000, https://localhost:5000');
+// Servidor HTTP que redirige a HTTPS
+const httpServer = http.createServer((req, res) => {
+  // Redirige todo el tráfico HTTP a HTTPS
+  res.writeHead(301, { Location: `https://${req.headers.host}${req.url}` });
+  res.end();
 });
 
-// app.listen(port, () => {
-//     console.log(`Servidor iniciado en http://localhost:${port}`);
-// });
+// Servidor HTTPS
+const httpsServer = https.createServer(httpsOptions, app);
+
+// Escuchar en el puerto 80 para HTTP (redirigir a HTTPS)
+httpServer.listen(80, () => {
+  console.log('Servidor HTTP redirigiendo desde el puerto 80 a HTTPS');
+});
+
+// Escuchar en el puerto 443 para HTTPS, redirigiendo a tu aplicación en el puerto 5000
+httpsServer.listen(443, () => {
+  console.log('Servidor HTTPS corriendo en el puerto 443, redirigiendo al puerto 5000');
+});
+
+// Tu aplicación corriendo en el puerto 5000
+app.listen(5000, () => {
+  console.log('Aplicación corriendo en el puerto 5000');
+});
