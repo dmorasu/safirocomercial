@@ -1,5 +1,3 @@
-
-const http = require('http');
 const https=require('https');
 const fs=require('fs');
 const express = require('express');
@@ -127,21 +125,10 @@ app.post('/buscar', (req, res) => {
 //     });
 // });
 
-const httpsServer = https.createServer(httpsOptions, app);
-
-// Servidor HTTP que redirige a HTTPS en el mismo puerto
-const httpServer = http.createServer((req, res) => {
-  // Redirige todo el tráfico HTTP a HTTPS en el mismo puerto
-  const host = req.headers.host.split(':')[0]; // Quita el puerto de la cabecera Host
-  res.writeHead(301, { Location: `https://${host}:5000${req.url}` });
-  res.end();
+https.createServer(options, app).listen(5000, () => {
+  console.log('Servidor HTTPS corriendo en puerto 5000, https://localhost:5000');
 });
 
-// Escuchar tanto HTTP como HTTPS en el puerto 5000
-httpServer.listen(5000, () => {
-  console.log('Servidor HTTP redirigiendo en el puerto 5000 a HTTPS');
-});
-
-httpsServer.listen(5000, () => {
-  console.log('Servidor HTTPS corriendo en el puerto 5000');
-});
+// app.listen(port, () => {
+//     console.log(`Servidor iniciado en http://localhost:${port}`);
+// });
