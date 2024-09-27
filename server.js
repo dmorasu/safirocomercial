@@ -1,3 +1,5 @@
+const https=require('https');
+const fs=require('fs');
 const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
@@ -9,6 +11,12 @@ const port = 5000;
 
 app.use('/resources',express.static('public'));
 app.use('/resources',express.static(__dirname + 'public'));
+
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/gestionactivosgpa.com/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/gestionactivosgpa.com/fullchain.pem')
+  
+};
 
 
 // Configuración de la base de datos
@@ -117,7 +125,10 @@ app.post('/buscar', (req, res) => {
 //     });
 // });
 
-
-app.listen(port, () => {
-    console.log(`Servidor iniciado en http://localhost:${port}`);
+https.createServer(options, app).listen(5000, () => {
+  console.log('Servidor HTTPS corriendo en puerto 5000, https://localhost:5000');
 });
+
+// app.listen(port, () => {
+//     console.log(`Servidor iniciado en http://localhost:${port}`);
+// });
