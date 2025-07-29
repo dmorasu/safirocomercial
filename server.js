@@ -73,11 +73,12 @@ app.get('/', (req, res) => {
 });
 
 // Ruta para buscar clientes por cédula
+// Ruta para buscar clientes por placa
 app.post('/buscar', (req, res) => {
-    const numero_caso = req.body.numero_caso;
-    const sql = "SELECT *, DATE_FORMAT(fecha_asignacion,'%d-%b-%y') AS fecha FROM  gestion_comercial_dfvivienda WHERE numero_caso = ?";
+    const placa = req.body.placa;
+    const sql = "SELECT *, DATE_FORMAT(fecha_asignacion,'%d-%b-%y') AS fecha FROM  gestion_vehiculos WHERE placa = ?";
     
-    db.query(sql, [numero_caso], (err, results) => {
+    db.query(sql, [placa], (err, results) => {
         if (err) throw err;
         res.render('resultados', { clientes: results });
     });

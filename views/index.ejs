@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Procesos Leasing Financiero</title>
+    <title>Finalizaciones Leasing Vehiculo</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="resources/css/style.css">
 </head>
@@ -13,12 +13,12 @@
     </div>
     
     <div class="container bloque">
-        <h1 class="mt-5 ">Gestión Comercial Crédito Diferente a Vivienda</h1>
+        <h1 class="mt-5 ">Consulta el estado del trámite</h1>
         <form action="/buscar" method="POST">
             <div class="form-group">
                 
-                <label for="numero_caso">Ingrese el número de caso a ingresar:</label>
-                <input type="text" class="form-control" id="numero_caso" name="numero_caso" required>
+                <label for="placa">Para consultar el estado del tu caso, digita la placa del vehículo sin espacios:</label>
+                <input type="text" class="form-control" id="placa" name="placa" required>
             </div>
             <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
